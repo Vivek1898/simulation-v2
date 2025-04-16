@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react"
 import { useRouter } from "next/router"
-import { getSupabase } from "../lib/supabase"
+import { getSupabase, getBaseUrl } from "../lib/supabase"
 
 const AuthContext = createContext()
 
@@ -39,9 +39,19 @@ export function AuthProvider({ children }) {
 
   const signUp = async (email, password, fullName, company) => {
     try {
+      // Get the current site URL for redirects
+      const redirectTo = `${getBaseUrl()}/auth/callback`
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: redirectTo,
+          data: {
+            full_name: fullName,
+            company: company,
+          },
+        },
       })
 
       if (error) throw error
