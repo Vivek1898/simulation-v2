@@ -5,7 +5,7 @@ const PERPLEXITY_API_KEY = process.env.NEXT_PUBLIC_PERPLEXITY_API_KEY || process
 
 // API Models
 const PERPLEXITY_MODEL = "sonar"
-const GEMINI_MODEL = "gemini-1.5-pro"
+const GEMINI_MODEL = "gemini-2.0-flash"
 
 // API Endpoints
 const PERPLEXITY_API_URL = "https://api.perplexity.ai/chat/completions"
@@ -109,7 +109,9 @@ export async function queryGemini(prompt, context = null) {
 // Function to get AI response (tries Perplexity first, falls back to Gemini)
 export async function getAIResponse(prompt, context = null) {
     try {
-        const response = await queryPerplexity(prompt, context)
+        // const response = await queryPerplexity(prompt, context)
+        const response = await queryGemini(prompt, context)
+
         return response
     } catch (error) {
         console.error("Perplexity failed, falling back to Gemini:", error)
