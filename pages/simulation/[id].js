@@ -6,6 +6,7 @@ import Head from "next/head"
 import Layout from "../../components/Layout"
 import { getSimulationById, updateSimulation } from "../../services/supabaseSimulationService"
 import ResultsDashboard from "../../components/simulation/ResultsDashboard"
+import AITradeAdvisor from "../../components/simulation/AITradeAdvisor";
 
 export default function SimulationDetails() {
   const router = useRouter()
@@ -205,6 +206,11 @@ export default function SimulationDetails() {
             onExport={handleExport}
           />
         )}
+
+
+        <AITradeAdvisor
+            simulationData={simulationData}
+        />
       </div>
     </Layout>
   )
